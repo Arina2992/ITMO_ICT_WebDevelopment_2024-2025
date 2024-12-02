@@ -18,7 +18,7 @@
     
     
       
-        <title>Получившийся проект - Web 3.2 Жижилева Арина, Лабораторная работа №2</title>
+        <title>Регистрация, авторизация, endpoints - Web 3.2 Жижилева Арина, Лабораторная работа №3</title>
       
     
     
@@ -76,7 +76,7 @@
 
 <header class="md-header md-header--shadow" data-md-component="header">
   <nav class="md-header__inner md-grid" aria-label="Header">
-    <a href=".." title="Web 3.2 Жижилева Арина, Лабораторная работа №2" class="md-header__button md-logo" aria-label="Web 3.2 Жижилева Арина, Лабораторная работа №2" data-md-component="logo">
+    <a href=".." title="Web 3.2 Жижилева Арина, Лабораторная работа №3" class="md-header__button md-logo" aria-label="Web 3.2 Жижилева Арина, Лабораторная работа №3" data-md-component="logo">
       
   
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
@@ -90,13 +90,13 @@
       <div class="md-header__ellipsis">
         <div class="md-header__topic">
           <span class="md-ellipsis">
-            Web 3.2 Жижилева Арина, Лабораторная работа №2
+            Web 3.2 Жижилева Арина, Лабораторная работа №3
           </span>
         </div>
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Получившийся проект
+              Регистрация, авторизация, endpoints
             
           </span>
         </div>
@@ -171,13 +171,13 @@
 
 <nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
   <label class="md-nav__title" for="__drawer">
-    <a href=".." title="Web 3.2 Жижилева Арина, Лабораторная работа №2" class="md-nav__button md-logo" aria-label="Web 3.2 Жижилева Арина, Лабораторная работа №2" data-md-component="logo">
+    <a href=".." title="Web 3.2 Жижилева Арина, Лабораторная работа №3" class="md-nav__button md-logo" aria-label="Web 3.2 Жижилева Арина, Лабораторная работа №3" data-md-component="logo">
       
   
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
 
     </a>
-    Web 3.2 Жижилева Арина, Лабораторная работа №2
+    Web 3.2 Жижилева Арина, Лабораторная работа №3
   </label>
   
   <ul class="md-nav__list" data-md-scrollfix>
@@ -213,7 +213,7 @@
         
   
   <span class="md-ellipsis">
-    Описание моделей
+    Практическая работа 3.1
   </span>
   
 
@@ -233,27 +233,7 @@
         
   
   <span class="md-ellipsis">
-    Регистрация
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-    
-      
-      
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../chapter3/" class="md-nav__link">
-        
-  
-  <span class="md-ellipsis">
-    Urls
+    Выбор варианта и модель базы данных
   </span>
   
 
@@ -273,7 +253,7 @@
         
   
   <span class="md-ellipsis">
-    Формы
+    API
   </span>
   
 
@@ -302,7 +282,7 @@
         
   
   <span class="md-ellipsis">
-    Получившийся проект
+    Регистрация, авторизация, endpoints
   </span>
   
 
@@ -345,32 +325,31 @@
                   
 
 
-<h1 id="_1">Получившийся проект</h1>
-<p>Запускаю проект и захожу http://127.0.0.1:8000/
-На странице появляется информация о доступных турах, можно применить фильтр.
-<img alt="Главная страница" src="../images/entering_site.png" />
-При попытке посмотреть информацию о турах, когда пользователь не зарегистрирован, его перебрасывает на страницу регистрации.
-<img alt="Регистрация" src="../images/try_without_login.png" />
-Можно войти в существующий аккаунт
-<img alt="Регистрация" src="../images/login.png" />
-После регистрации мы сможем посмотреть информацию о турах и забронировать тур. 
-<img alt="Информация о турах" src="../images/booking_tour.png" />
-Во время брони мы можем выбрать места.
-<img alt="Бронь" src="../images/booking_exact_tour.png" />
-После бронирования мы можем перейти в наш профиль и увидеть бронирования.
-<img alt="Наш профиль" src="../images/my_bookings.png" />
-В нашем профиле мы можем изменить бронирование или удалить его. 
-<img alt="Редактирование бронирования" src="../images/edit_bookings.png" />
-<img alt="Редактирование бронирования" src="../images/deleting.png" />
-На главной странице мы можем увидеть проданные туры всех туристических фирм.
-<img alt="Редактирование бронирования" src="../images/sold_tours.png" />
-Через админку мы можем подтвердить брони кнопкой is confirmed
-<img alt="Редактирование бронирования" src="../images/admin_confirmation.png" />
-После бронирования тура, когда админ подтвердит наш тур, мы можем оставить отзыв, на странице тура появится кнопка оставить отзыв.
-<img alt="Редактирование бронирования" src="../images/add_review.png" />
-Форма для добавления отзыва.
-<img alt="Редактирование бронирования" src="../images/review.png" />
-<img alt="Редактирование бронирования" src="../images/our_review.png" /></p>
+<h1 id="_1">Регистрация. Авторизация. Вывод информации о пользователе.</h1>
+<p>Подключить регистрацию / авторизацию по токенам / вывод информации о текущем
+пользователе средствами Djoser.</p>
+<p><strong>Регистрируемся на http://127.0.0.1:8000/api/auth/users/</strong>
+<img alt="Схема базы данных" src="../images/register.png" /></p>
+<p><strong>Входим на http://127.0.0.1:8000/api/auth/jwt/create/</strong>
+<img alt="Схема базы данных" src="../images/login.png" /></p>
+<p><strong>/Customers/</strong>
+<img alt="Схема базы данных" src="../images/customers.png" /></p>
+<p><strong>/cars/</strong>
+<img alt="Схема базы данных" src="../images/cars.png" />
+<strong>/employees/</strong>
+<img alt="Схема базы данных" src="../images/employees.png" />
+<strong>/services/</strong>
+<img alt="Схема базы данных" src="../images/services.png" />
+<strong>/orders/</strong>
+<img alt="Схема базы данных" src="../images/orders.png" />
+<strong>/order-details/</strong>
+<img alt="Схема базы данных" src="../images/details.png" />
+<strong>/payments/</strong>
+<img alt="Схема базы данных" src="../images/payments.png" />
+<strong>/qualifications/</strong>
+<img alt="Схема базы данных" src="../images/qualifications.png" /></p>
+<p><strong>/swagger/</strong>
+<img alt="Схема базы данных" src="../images/swagger.png" /></p>
 
 
 

@@ -9,7 +9,7 @@
       
       
       
-        <link rel="prev" href="../chapter3/">
+        <link rel="prev" href="../chapter2/">
       
       
         <link rel="next" href="../chapter5/">
@@ -20,7 +20,7 @@
     
     
       
-        <title>Формы - Web 3.2 Жижилева Арина, Лабораторная работа №2</title>
+        <title>API - Web 3.2 Жижилева Арина, Лабораторная работа №3</title>
       
     
     
@@ -62,7 +62,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#_1" class="md-skip">
+        <a href="#api" class="md-skip">
           Skip to content
         </a>
       
@@ -78,7 +78,7 @@
 
 <header class="md-header md-header--shadow" data-md-component="header">
   <nav class="md-header__inner md-grid" aria-label="Header">
-    <a href=".." title="Web 3.2 Жижилева Арина, Лабораторная работа №2" class="md-header__button md-logo" aria-label="Web 3.2 Жижилева Арина, Лабораторная работа №2" data-md-component="logo">
+    <a href=".." title="Web 3.2 Жижилева Арина, Лабораторная работа №3" class="md-header__button md-logo" aria-label="Web 3.2 Жижилева Арина, Лабораторная работа №3" data-md-component="logo">
       
   
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
@@ -92,13 +92,13 @@
       <div class="md-header__ellipsis">
         <div class="md-header__topic">
           <span class="md-ellipsis">
-            Web 3.2 Жижилева Арина, Лабораторная работа №2
+            Web 3.2 Жижилева Арина, Лабораторная работа №3
           </span>
         </div>
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Формы
+              API
             
           </span>
         </div>
@@ -173,13 +173,13 @@
 
 <nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
   <label class="md-nav__title" for="__drawer">
-    <a href=".." title="Web 3.2 Жижилева Арина, Лабораторная работа №2" class="md-nav__button md-logo" aria-label="Web 3.2 Жижилева Арина, Лабораторная работа №2" data-md-component="logo">
+    <a href=".." title="Web 3.2 Жижилева Арина, Лабораторная работа №3" class="md-nav__button md-logo" aria-label="Web 3.2 Жижилева Арина, Лабораторная работа №3" data-md-component="logo">
       
   
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
 
     </a>
-    Web 3.2 Жижилева Арина, Лабораторная работа №2
+    Web 3.2 Жижилева Арина, Лабораторная работа №3
   </label>
   
   <ul class="md-nav__list" data-md-scrollfix>
@@ -215,7 +215,7 @@
         
   
   <span class="md-ellipsis">
-    Описание моделей
+    Практическая работа 3.1
   </span>
   
 
@@ -235,27 +235,7 @@
         
   
   <span class="md-ellipsis">
-    Регистрация
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-    
-      
-      
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../chapter3/" class="md-nav__link">
-        
-  
-  <span class="md-ellipsis">
-    Urls
+    Выбор варианта и модель базы данных
   </span>
   
 
@@ -284,7 +264,7 @@
         
   
   <span class="md-ellipsis">
-    Формы
+    API
   </span>
   
 
@@ -305,7 +285,7 @@
         
   
   <span class="md-ellipsis">
-    Получившийся проект
+    Регистрация, авторизация, endpoints
   </span>
   
 
@@ -347,48 +327,118 @@
                   
 
 
-<h1 id="_1">Формы</h1>
-<p>Добавляю форму регистрации пользователя, форму для бронирования, форму для отзывов и форму для фильтрации туров. </p>
-<p><strong>код из файла forms.py:</strong></p>
-<pre><code class="language-python">from django import forms
+<h1 id="api">API</h1>
+<p>Реализовать логику работу API средствами Django REST Framework (используя
+методы сериализации).</p>
+<p>Я создала ViewSet и зарегистрировала их в маршрутах. Эти ViewSet обеспечивают CRUD-операции для всех моделей через REST API.</p>
+<p><strong>код из файла views.py:</strong></p>
+<pre><code class="language-python">from rest_framework import viewsets
+from .models import Customer, Car, Employee, Service, Order, OrderDetails, Payment, Qualification
+from .serializers import (
+    CustomerSerializer, CarSerializer, EmployeeSerializer,
+    ServiceSerializer, OrderSerializer, OrderDetailsSerializer,
+    PaymentSerializer, QualificationSerializer
+)
 from django.contrib.auth.models import User
-from .models import Booking, Review
+from rest_framework.views import APIView
+from rest_framework.response import Response
 
-class UserRegistrationForm(forms.ModelForm):
-    password = forms.CharField(widget=forms.PasswordInput)
-    password_confirm = forms.CharField(widget=forms.PasswordInput, label=&quot;Confirm Password&quot;)
+class UserListView(APIView):
+    def get(self, request):
+        users = User.objects.all()
+        user_data = [{'id': user.id, 'username': user.username} for user in users]
+        return Response(user_data)
 
+class CustomerViewSet(viewsets.ModelViewSet):
+    queryset = Customer.objects.all()
+    serializer_class = CustomerSerializer
+
+class CarViewSet(viewsets.ModelViewSet):
+    queryset = Car.objects.all()
+    serializer_class = CarSerializer
+
+class EmployeeViewSet(viewsets.ModelViewSet):
+    queryset = Employee.objects.all()
+    serializer_class = EmployeeSerializer
+
+class ServiceViewSet(viewsets.ModelViewSet):
+    queryset = Service.objects.all()
+    serializer_class = ServiceSerializer
+
+class OrderViewSet(viewsets.ModelViewSet):
+    queryset = Order.objects.all()
+    serializer_class = OrderSerializer
+
+class OrderDetailsViewSet(viewsets.ModelViewSet):
+    queryset = OrderDetails.objects.all()
+    serializer_class = OrderDetailsSerializer
+
+class PaymentViewSet(viewsets.ModelViewSet):
+    queryset = Payment.objects.all()
+    serializer_class = PaymentSerializer
+
+class QualificationViewSet(viewsets.ModelViewSet):
+    queryset = Qualification.objects.all()
+    serializer_class = QualificationSerializer
+
+</code></pre>
+<p><strong>код из файла serializers.py:</strong></p>
+<pre><code class="language-python">from rest_framework import serializers
+from django.contrib.auth.models import User
+from .models import Customer, Car, Employee, Service, Order, OrderDetails, Payment, Qualification
+
+from djoser.serializers import UserCreateSerializer
+
+class CustomUserCreateSerializer(UserCreateSerializer):
+    class Meta(UserCreateSerializer.Meta):
+        fields = ['id', 'email', 'username', 'password']
+
+
+class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = ['username', 'email', 'password', 'password_confirm']
+        fields = ['id', 'username', 'email']
 
-    def clean(self):
-        cleaned_data = super().clean()
-        password = cleaned_data.get(&quot;password&quot;)
-        password_confirm = cleaned_data.get(&quot;password_confirm&quot;)
-
-        if password and password_confirm and password != password_confirm:
-            self.add_error('password_confirm', &quot;Passwords do not match.&quot;)
-        return cleaned_data
-
-class BookingForm(forms.ModelForm):
-    number_of_seats = forms.IntegerField(min_value=1, label=&quot;Number of Seats&quot;)
-
+class CustomerSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Booking
-        fields = ['number_of_seats']
+        model = Customer
+        fields = '__all__'
 
-class ReviewForm(forms.ModelForm):
-    rating = forms.IntegerField(min_value=1, max_value=10)
-
+class CarSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Review
-        fields = ['text', 'rating']
+        model = Car
+        fields = '__all__'
 
-class TourFilterForm(forms.Form):
-    name = forms.CharField(required=False, label=&quot;Tour name&quot;, max_length=100)
-    start_date = forms.DateField(required=False, label=&quot;Start date&quot;, widget=forms.DateInput(attrs={'type': 'date'}))
-    end_date = forms.DateField(required=False, label=&quot;End date&quot;, widget=forms.DateInput(attrs={'type': 'date'}))
+class EmployeeSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Employee
+        fields = '__all__'
+
+class ServiceSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Service
+        fields = '__all__'
+
+class OrderSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Order
+        fields = '__all__'
+
+class OrderDetailsSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = OrderDetails
+        fields = '__all__'
+
+class PaymentSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Payment
+        fields = '__all__'
+
+class QualificationSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Qualification
+        fields = '__all__'
+
 </code></pre>
 
 
