@@ -1,3 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+    <url>
+         <loc>https://Arina2992.github.io/ITMO_ICT_WebDevelopment_2024-2025/report/</loc>
+         <lastmod>2024-12-02</lastmod>
+    </url>
+    <url>
+         <loc>https://Arina2992.github.io/ITMO_ICT_WebDevelopment_2024-2025/report/chapter1/</loc>
+         <lastmod>2024-12-02</lastmod>
+    </url>
+    <url>
+         <loc>https://Arina2992.github.io/ITMO_ICT_WebDevelopment_2024-2025/report/chapter2/</loc>
+         <lastmod>2024-12-02</lastmod>
+    </url>
+    <url>
+         <loc>https://Arina2992.github.io/ITMO_ICT_WebDevelopment_2024-2025/report/chapter4/</loc>
+         <lastmod>2024-12-02</lastmod>
+    </url>
+    <url>
+         <loc>https://Arina2992.github.io/ITMO_ICT_WebDevelopment_2024-2025/report/chapter5/</loc>
+         <lastmod>2024-12-02</lastmod>
+    </url>
 </urlset>
