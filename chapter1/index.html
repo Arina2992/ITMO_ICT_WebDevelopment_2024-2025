@@ -64,7 +64,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#_1" class="md-skip">
+        <a href="#1" class="md-skip">
           Skip to content
         </a>
       
@@ -222,17 +222,6 @@
         
       
       
-        <label class="md-nav__link md-nav__link--active" for="__toc">
-          
-  
-  <span class="md-ellipsis">
-    Лабораторная работа 1
-  </span>
-  
-
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
       <a href="./" class="md-nav__link md-nav__link--active">
         
   
@@ -242,43 +231,6 @@
   
 
       </a>
-      
-        
-
-<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
-  
-  
-  
-    
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#31" class="md-nav__link">
-    <span class="md-ellipsis">
-      Правки по практической работе 3.1
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#3" class="md-nav__link">
-    <span class="md-ellipsis">
-      Правки по лабораторной работе 3.
-    </span>
-  </a>
-  
-</li>
-      
-    </ul>
-  
-</nav>
       
     </li>
   
@@ -364,32 +316,6 @@
     
   
   
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#31" class="md-nav__link">
-    <span class="md-ellipsis">
-      Правки по практической работе 3.1
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#3" class="md-nav__link">
-    <span class="md-ellipsis">
-      Правки по лабораторной работе 3.
-    </span>
-  </a>
-  
-</li>
-      
-    </ul>
-  
 </nav>
                   </div>
                 </div>
@@ -403,170 +329,375 @@
                   
 
 
-<h1 id="_1">Правки</h1>
-<h2 id="31">Правки по практической работе 3.1</h2>
-<p>Средняя стоимость туров через aggregate:
-<img alt="Схема базы данных" src="../images/average.png" />
-Вывод бронирований пользователя:
-<img alt="Схема базы данных" src="../images/user_booking.png" />
-Вывод всех туров и их бронирований:
-<img alt="Схема базы данных" src="../images/many.png" />
-Общее количество бронирований у пользователя:
-<img alt="Схема базы данных" src="../images/aggregate.png" /></p>
-<h2 id="3">Правки по лабораторной работе 3.</h2>
-<p><strong>Реализация баланса пользователя:</strong></p>
-<p>Вношу изменения в модель Customer, добавляю баланс:</p>
-<pre><code class="language-python">class Customer(models.Model):
-    customer_id = models.AutoField(primary_key=True)
-    name = models.CharField(max_length=255)
-    phone = models.CharField(max_length=20, unique=True)
-    email = models.EmailField(unique=True)
-    address = models.TextField(blank=True, null=True)
-    balance = models.DecimalField(max_digits=10, decimal_places=2, default=0.0)  # Новый атрибут
+<h1 id="1">Задание 1</h1>
+<p>Реализовать клиентскую и серверную часть приложения. Клиент отправляет серверу сообщение «Hello, server», и оно должно отобразиться на стороне сервера. В ответ сервер отправляет клиенту сообщение «Hello, client», которое должно отобразиться у клиента.</p>
+<p>Требования:</p>
+<p>Обязательно использовать библиотеку socket.
+Реализовать с помощью протокола UDP.</p>
+<p><strong>код из файла client.py:</strong></p>
+<pre><code class="language-python">from socket import *
 
-    def __str__(self):
-        return self.name
+client_socket = socket(AF_INET, SOCK_DGRAM)
 
+data_for_server = &quot;Hello, server!&quot;
+
+client_socket.sendto(data_for_server.encode(), ('localhost', 12345))
+print(f&quot;Message: '{data_for_server}' was sent to server.&quot;)
+
+data_from_server, addr = client_socket.recvfrom(1024)
+print(f&quot;Message: '{data_from_server.decode()}' was received from server.&quot;)
 </code></pre>
-<p>Редактирую представление и делаю проверку на баланс:</p>
-<pre><code class="language-python">class OrderViewSet(viewsets.ModelViewSet):
-    queryset = Order.objects.all()
-    serializer_class = OrderSerializer
+<p><img alt="Работа клиента при запуске кода на скриншоте" src="images/task1client.png" />
+<strong>код из файла server.py:</strong></p>
+<pre><code class="language-python">from socket import *
 
-    def create(self, request, *args, **kwargs):
-        customer_id = request.data.get('customer')
-        total_cost = request.data.get('total_cost')
+server_socket = socket(AF_INET, SOCK_DGRAM)
+server_address = ('localhost', 12345)
 
+server_socket.bind(server_address)
+
+print(&quot;UDP is running&quot;)
+
+while True:
+    print(&quot;waiting for data...&quot;)
+    data, client_address = server_socket.recvfrom(1024)
+    if not data:
+        break
+    print(f&quot;Message from client '{data.decode()}' was received from client.&quot;, flush=True)
+
+    response = &quot;Hello, client!&quot;
+    server_socket.sendto(response.encode(), client_address)
+    print(f&quot;Message '{response}' was sent to client.&quot;)
+
+server_socket.close()
+</code></pre>
+<p><img alt="Работа сервера при запуске кода на скриншоте" src="images/task1server.png" /></p>
+<h1 id="2">Задание 2</h1>
+<p>Реализовать клиентскую и серверную часть приложения. Клиент запрашивает выполнение математической операции, параметры которой вводятся с клавиатуры. Сервер обрабатывает данные и возвращает результат клиенту.</p>
+<p>Мой вариант операции:</p>
+<pre><code>Поиск площади параллелограмма.
+</code></pre>
+<p>Требования:</p>
+<p>Обязательно использовать библиотеку socket.
+Реализовать с помощью протокола TCP.</p>
+<p><strong>код из файла client.py:</strong></p>
+<pre><code class="language-python">from socket import *
+
+client_socket = socket(AF_INET, SOCK_STREAM)
+client_socket.connect(('localhost', 12345))
+
+try:
+    base = float(input(&quot;Enter the length of the base of the parallelogram: &quot;))
+    height = float(input(&quot;Enter the height of the parallelogram: &quot;))
+    print(f&quot;Parameters for the parallelogram are base={base}, height={height}.&quot;)
+    message = f&quot;{base} {height}&quot;
+    client_socket.sendall(message.encode())
+
+    data = client_socket.recv(1024).decode()
+    print(f&quot;Area of the parallelogram is {data}&quot;)
+
+finally:
+    client_socket.close()
+</code></pre>
+<p><strong>Работа клиента при запуске кода на скриншоте</strong>
+<img alt="Работа клиента при запуске кода на скриншоте" src="images/task2client.png" />
+<strong>код из файла server.py:</strong></p>
+<pre><code class="language-python">from socket import *
+import time
+
+def parallelogram_area(a, h):
+    return a * h
+
+
+server_socket = socket(AF_INET, SOCK_STREAM)
+server_socket.bind(('localhost', 12345))
+server_socket.listen(1)
+
+print(&quot;Waiting for client...&quot;)
+
+while True:
+    connection, addr = server_socket.accept()
+    try:
+        time.sleep(3)
+        print(f&quot;client {addr} is now in session&quot;)
+        data = connection.recv(1024).decode()
+        if data:
+            base, height = map(float, data.split())
+            print(f&quot;Parameters {base}, {height} are received&quot;)
+            area = parallelogram_area(base, height)
+
+            connection.sendall(str(area).encode())
+            print(f&quot;result {area} sent to client&quot;)
+    finally:
+        connection.close()
+</code></pre>
+<p><strong>Работа сервера при запуске кода на скриншоте</strong>
+<img alt="Работа сервера при запуске кода на скриншоте" src="images/task2server.png" /></p>
+<h1 id="3">Задание 3</h1>
+<p>Реализовать серверную часть приложения. Клиент подключается к серверу, и в ответ получает HTTP-сообщение, содержащее HTML-страницу, которая сервер подгружает из файла index.html.</p>
+<p>Требования:</p>
+<p>Обязательно использовать библиотеку socket.</p>
+<p><strong>код из файла server.py:</strong></p>
+<pre><code class="language-python">from socket import *
+
+server_socket = socket(AF_INET, SOCK_STREAM)
+server_socket.bind(('localhost', 8080))
+server_socket.listen(1)
+
+print(&quot;Server is running...&quot;)
+print(&quot;http://localhost:8080&quot;)
+
+while True:
+    connection, client_address = server_socket.accept()
+    try:
+        print(f&quot;Client: {client_address} is now in session.&quot;)
+
+        request = connection.recv(1024).decode()
+        print(f&quot;Client request: \n{request}&quot;)
+
+        with open('index.html', 'r') as file:
+            html_content = file.read()
+
+        response = f&quot;&quot;&quot;HTTP/1.1 200 OK
+Content-Type: text/html
+Content-Length: {len(html_content)}
+
+{html_content}&quot;&quot;&quot;
+
+        connection.sendall(response.encode())
+        print(&quot;Response is sent to a client.&quot;)
+    finally:
+        connection.close()
+        print(f&quot;Сonnection with client {client_address} is closed.&quot;)
+</code></pre>
+<p>Код из файла index.html</p>
+<pre><code class="language-html">&lt;!DOCTYPE html&gt;
+&lt;html lang=&quot;en&quot;&gt;
+&lt;head&gt;
+    &lt;meta charset=&quot;UTF-8&quot;&gt;
+    &lt;title&gt;&lt;!DOCTYPE html&gt;
+&lt;html lang=&quot;en&quot;&gt;
+&lt;head&gt;
+    &lt;meta charset=&quot;UTF-8&quot;&gt;
+    &lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1.0&quot;&gt;
+    &lt;title&gt;Server Provided This Page&lt;/title&gt;
+    &lt;style&gt;
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            color: black;
+            text-align: center;
+        }
+
+        h1 {
+            font-size: 3em;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+    &lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    &lt;h1&gt;This page was provided by the server&lt;/h1&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</code></pre>
+<p>После запуска сервера переходим на http://localhost:8080</p>
+<p><strong>Работа сервера на localhost при запуске кода на скриншоте</strong>
+<img alt="Работа сервера при запуске кода на скриншоте" src="images/task3server.png" /></p>
+<h1 id="4">Задание 4</h1>
+<p>Реализовать двухпользовательский или многопользовательский чат. Для максимального количества баллов реализуйте многопользовательский чат.</p>
+<p>Требования:</p>
+<p>Обязательно использовать библиотеку socket.</p>
+<p>Для многопользовательского чата необходимо использовать библиотеку threading.</p>
+<p><strong>код из файла client.py:</strong></p>
+<pre><code class="language-python">from socket import *
+import threading
+
+def receive_messages(client_socket):
+    while True:
         try:
-            customer = Customer.objects.get(id=customer_id)
-        except Customer.DoesNotExist:
-            raise ValidationError({&quot;detail&quot;: &quot;Customer not found.&quot;})
+            message = client_socket.recv(1024).decode()
+            if message:
+                print(message)
+            else:
+                break
+        except:
+            print(&quot;unable to send message&quot;)
+            client_socket.close()
+            break
 
-        # Проверка баланса
-        if customer.balance &lt; float(total_cost):
-            raise ValidationError({&quot;detail&quot;: &quot;Insufficient balance to place the order.&quot;})
+client_socket = socket(AF_INET, SOCK_STREAM)
+client_socket.connect(('localhost', 8080))
 
-        # Если проверка пройдена, уменьшаем баланс клиента
-        customer.balance -= float(total_cost)
-        customer.save(update_fields=['balance'])
+threading.Thread(target=receive_messages, args=(client_socket,)).start()
 
-        # Создаем заказ
-        return super().create(request, *args, **kwargs)
+username = input(&quot;Enter your name: &quot;)
+client_socket.send(username.encode())
+
+while True:
+    message = input()
+    if message.lower() == 'exit':
+        break
+    client_socket.send(message.encode())
+
+client_socket.close()
 </code></pre>
-<p>У пользователя было 10 тысяч, делаем заказ на 9 тысяч.
-<img alt="Схема базы данных" src="../images/balance.png" />
-<img alt="Схема базы данных" src="../images/arina.png" />
-Проверяем баланс:
-<img alt="Схема базы данных" src="../images/customerr.png" />
-Попробуем создать заказ, превыщающий наш баланс:
-<img alt="Схема базы данных" src="../images/bal.png" /></p>
-<p><strong>Аналитические задачи:</strong></p>
-<p>Средняя стоимость услуги:</p>
-<pre><code class="language-python">class AverageServiceCostView(APIView):
-    permission_classes = [AllowAny]
+<p><strong>код из файла server.py:</strong></p>
+<pre><code class="language-python">from socket import *
+import threading
 
-    def get(self, request):
-        average_cost = OrderDetails.objects.aggregate(average_price=Avg('cost'))['average_price']
-        return Response({
-            &quot;average_service_cost&quot;: average_cost
-        })
 
+clients = []
+usernames = []
+
+def handle_client(client_socket, address):
+    print(f&quot;{address} entered the session.&quot;)
+    client_socket.send(&quot;Enter your name &quot;.encode())
+    username = client_socket.recv(1024).decode()
+    usernames.append(username)
+    clients.append(client_socket)
+
+    broadcast(f&quot;{username} entered the session&quot;.encode(), client_socket)
+
+    while True:
+        try:
+            message = client_socket.recv(1024)
+            if message:
+                broadcast(f&quot;{username}: {message.decode()}&quot;.encode(), client_socket)
+            else:
+                remove_client(client_socket)
+                break
+        except:
+            continue
+
+def broadcast(message, client_socket):
+    for client in clients:
+        if client != client_socket:
+            try:
+                client.send(message)
+            except:
+                remove_client(client)
+
+def remove_client(client_socket):
+    if client_socket in clients:
+        index = clients.index(client_socket)
+        clients.remove(client_socket)
+        username = usernames[index]
+        usernames.remove(username)
+        broadcast(f&quot;{username} left.&quot;.encode(), client_socket)
+
+server_socket = socket(AF_INET, SOCK_STREAM)
+server_socket.bind(('localhost', 8080))
+server_socket.listen(5)
+print(&quot;Server is running...&quot;)
+
+while True:
+    client_socket, address = server_socket.accept()
+    threading.Thread(target=handle_client, args=(client_socket, address)).start()
 </code></pre>
-<p><img alt="Схема базы данных" src="../images/service_cost.png" /></p>
-<p>Топ клиенты по сумме заказа:</p>
-<pre><code class="language-python">class TopCustomersView(APIView):
-    permission_classes = [AllowAny]
+<p><strong>Работа первого клиента при запуске кода на скриншоте</strong>
+<img alt="Работа клиента при запуске кода на скриншоте" src="images/task4client1.png" /></p>
+<p><strong>Работа первого клиента при запуске кода на скриншоте</strong>
+<img alt="Работа клиента при запуске кода на скриншоте" src="images/task4client2.png" /></p>
+<h1 id="4_1">Задание 4</h1>
+<p>Реализовать двухпользовательский или многопользовательский чат. Для максимального количества баллов реализуйте многопользовательский чат.</p>
+<p>Требования:</p>
+<p>Обязательно использовать библиотеку socket.</p>
+<p>Для многопользовательского чата необходимо использовать библиотеку threading.</p>
+<p><strong>код из файла client.py:</strong></p>
+<pre><code class="language-python">from socket import *
+import threading
 
-    def get(self, request):
-        customers = Customer.objects.annotate(total_spent=Sum('orders__total_cost')) \
-            .order_by('-total_spent')[:10]  # Топ-10
+def receive_messages(client_socket):
+    while True:
+        try:
+            message = client_socket.recv(1024).decode()
+            if message:
+                print(message)
+            else:
+                break
+        except:
+            print(&quot;unable to send message&quot;)
+            client_socket.close()
+            break
 
+client_socket = socket(AF_INET, SOCK_STREAM)
+client_socket.connect(('localhost', 8080))
 
-        data = [
-            {
-                &quot;customer_id&quot;: customer.customer_id,
-                &quot;name&quot;: customer.name,
-                &quot;total_spent&quot;: customer.total_spent
-            }
-            for customer in customers
-        ]
+threading.Thread(target=receive_messages, args=(client_socket,)).start()
 
-        return Response({&quot;top_customers&quot;: data})
+username = input(&quot;Enter your name: &quot;)
+client_socket.send(username.encode())
+
+while True:
+    message = input()
+    if message.lower() == 'exit':
+        break
+    client_socket.send(message.encode())
+
+client_socket.close()
 </code></pre>
-<p><img alt="Схема базы данных" src="../images/top.png" /></p>
-<h1 id="31_1">Практическая работа 3.1</h1>
-<h2 id="_2">Ход работы</h2>
-<pre><code class="language-python">python manage.py shell
-</code></pre>
-<p><img alt="Схема базы данных" src="../images/prac.png" /></p>
-<p><strong>Смотрим турагенства</strong>
-<img alt="Схема базы данных" src="../images/prac2.png" /></p>
-<p><strong>Создаем новые агенства</strong>
-<img alt="Схема базы данных" src="../images/prac3.png" /></p>
-<p><strong>Смотрим список агенства</strong>
-<img alt="Схема базы данных" src="../images/%D0%B7%D0%BA%D1%84%D1%814.png" /></p>
-<p><strong>Создаем новые туры</strong>
-<img alt="Схема базы данных" src="../images/%D0%B7%D0%BA%D1%84%D1%815.png" /></p>
-<p><strong>Создаем новые отзывы</strong>
-<img alt="Схема базы данных" src="../images/%D0%B7%D0%BA%D1%84%D1%816.png" /></p>
-<h1 id="2">Задача 2. Создание простых запросов</h1>
-<p><strong>1.Выведете все туры агенства Hot Sales Agency (agency [1])</strong>
-<img alt="Схема базы данных" src="../images/%D0%B7%D0%BA%D1%84%D1%817.png" /></p>
-<p><strong>2.Выведите все туры где в названии есть слово "тур"</strong>
-<img alt="Схема базы данных" src="../images/2.png" /></p>
-<p><strong>3.Взяв любого случайного юзера получить его id, и по этому id получить экземпляр ревью в виде объекта модели (можно в 2 запроса)</strong>
-<img alt="Схема базы данных" src="../images/3.png" /></p>
-<p><strong>4.Вывести всех юзеров у которых есть отзыв на тур Cambodja (tour [3])</strong>
-<img alt="Схема базы данных" src="../images/4.png" /></p>
-<p><strong>5.Найти все туры, чей год начала начинается с 2025</strong>
-<img alt="Схема базы данных" src="../images/5.png" /></p>
-<h1 id="3_1">Задача 3. Агрегация и аннотация запросов</h1>
-<p><strong>1. Вывод даты начала самого старого тура.</strong>
-<img alt="Схема базы данных" src="../images/a.png" /></p>
-<p><strong>2. Укажите самую позднюю дату бронирования имеющую какую-то из существующих моделей в вашей базе</strong> 
-<img alt="Схема базы данных" src="../images/b.png" /></p>
-<p><strong>3. Выведите количество туров для каждого агентства</strong>
-<img alt="Схема базы данных" src="../images/c.png" /></p>
-<p><strong>4. Подсчитайте количество туров с рейтингов 5</strong>
-<img alt="Схема базы данных" src="../images/d.png" /></p>
-<p><strong>5.Отсортируйте всех юзеров по дате бронирования (Примечание: чтобы не выводить несколько раз одни и те же таблицы воспользуйтесь методом .distinct()</strong>
-<img alt="Схема базы данных" src="../images/e.png" /></p>
-<p># Практическое задание</p>
-<p>Реализовать ендпоинты для добавления и просмотра скилов методом, описанным в пункте выше.</p>
-<pre><code class="language-python">class SkillListView(APIView):
-   &quot;&quot;&quot;
-   Представление для получения всех умений
-   &quot;&quot;&quot;
-   def get(self, request):
-       skills = Skill.objects.all()
-       serializer = SkillSerializer(skills, many=True)
-       return Response({&quot;skills&quot;: serializer.data})
+<p><strong>код из файла server.py:</strong></p>
+<pre><code class="language-python">from socket import *
+import threading
 
-class SkillCreateView(APIView):
-   &quot;&quot;&quot;
-   Представление для создания нового умения
-   &quot;&quot;&quot;
-   def post(self, request):
-       skill_data = request.data.get(&quot;skill&quot;)
-       serializer = SkillSerializer(data=skill_data)
 
-       if serializer.is_valid(raise_exception=True):
-           skill_saved = serializer.save()
-           return Response(
-               {&quot;success&quot;: f&quot;Skill '{skill_saved.title}' created successfully.&quot;},
-               status=status.HTTP_201_CREATED
-           )
-       return Response(
-           {&quot;error&quot;: &quot;Skill creation failed.&quot;},
-           status=status.HTTP_400_BAD_REQUEST
-       )
+clients = []
+usernames = []
+
+def handle_client(client_socket, address):
+    print(f&quot;{address} entered the session.&quot;)
+    client_socket.send(&quot;Enter your name &quot;.encode())
+    username = client_socket.recv(1024).decode()
+    usernames.append(username)
+    clients.append(client_socket)
+
+    broadcast(f&quot;{username} entered the session&quot;.encode(), client_socket)
+
+    while True:
+        try:
+            message = client_socket.recv(1024)
+            if message:
+                broadcast(f&quot;{username}: {message.decode()}&quot;.encode(), client_socket)
+            else:
+                remove_client(client_socket)
+                break
+        except:
+            continue
+
+def broadcast(message, client_socket):
+    for client in clients:
+        if client != client_socket:
+            try:
+                client.send(message)
+            except:
+                remove_client(client)
+
+def remove_client(client_socket):
+    if client_socket in clients:
+        index = clients.index(client_socket)
+        clients.remove(client_socket)
+        username = usernames[index]
+        usernames.remove(username)
+        broadcast(f&quot;{username} left.&quot;.encode(), client_socket)
+
+server_socket = socket(AF_INET, SOCK_STREAM)
+server_socket.bind(('localhost', 8080))
+server_socket.listen(5)
+print(&quot;Server is running...&quot;)
+
+while True:
+    client_socket, address = server_socket.accept()
+    threading.Thread(target=handle_client, args=(client_socket, address)).start()
 </code></pre>
-<p><img alt="Схема базы данных" src="../images/%D0%BF.png" />
-{ "profession": { "title": "Warrior", "description": "A brave and skilled fighter." } }
-<img alt="Схема базы данных" src="../images/%D1%84.png" /></p>
-<p><strong>Эндпоинты для добавления и просмотра скиллов.</strong>
-<img alt="Схема базы данных" src="../images/skill.png" />
-<img alt="Схема базы данных" src="../images/skills.png" /></p>
+<p><strong>Работа первого клиента при запуске кода на скриншоте</strong>
+<img alt="Работа клиента при запуске кода на скриншоте" src="images/task4client1.png" /></p>
+<p><strong>Работа первого клиента при запуске кода на скриншоте</strong>
+<img alt="Работа клиента при запуске кода на скриншоте" src="images/task4client2.png" /></p>
 
 
 
