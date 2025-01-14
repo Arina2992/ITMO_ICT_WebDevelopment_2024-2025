@@ -14,15 +14,13 @@
         <link rel="prev" href="../chapter4/">
       
       
-        <link rel="next" href="../chapter6/">
-      
       
       <link rel="icon" href="../assets/images/favicon.png">
       <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.5.42">
     
     
       
-        <title>Регистрация, авторизация, endpoints - Web 3.2 Жижилева Арина, Лабораторная работа №3-4</title>
+        <title>Лабораторная работа 4 - Web 3.2 Жижилева Арина, Лабораторная работа №3-4</title>
       
     
     
@@ -64,7 +62,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#_1" class="md-skip">
+        <a href="#no4" class="md-skip">
           Skip to content
         </a>
       
@@ -100,7 +98,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Регистрация, авторизация, endpoints
+              Лабораторная работа 4
             
           </span>
         </div>
@@ -217,7 +215,7 @@
         
   
   <span class="md-ellipsis">
-    Практическая работа 3.1
+    Лабораторная работа 1
   </span>
   
 
@@ -237,7 +235,7 @@
         
   
   <span class="md-ellipsis">
-    Выбор варианта и модель базы данных
+    Лабораторная работа 2
   </span>
   
 
@@ -257,7 +255,7 @@
         
   
   <span class="md-ellipsis">
-    API
+    Лабораторная работа 3
   </span>
   
 
@@ -282,76 +280,55 @@
         
       
       
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    Лабораторная работа 4
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
       <a href="./" class="md-nav__link md-nav__link--active">
         
   
   <span class="md-ellipsis">
-    Регистрация, авторизация, endpoints
+    Лабораторная работа 4
   </span>
   
 
       </a>
       
-    </li>
-  
-
-    
-      
-      
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../chapter6/" class="md-nav__link">
         
-  
-  <span class="md-ellipsis">
-    Практическая работа 4.2
-  </span>
-  
 
-      </a>
-    </li>
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
   
-
+  
+  
     
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
+        <li class="md-nav__item">
+  <a href="#42" class="md-nav__link">
+    <span class="md-ellipsis">
+      Практическая работа 4.2
+    </span>
+  </a>
+  
+</li>
       
+    </ul>
   
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../chapter7/" class="md-nav__link">
-        
-  
-  <span class="md-ellipsis">
-    Интерфейсы
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-    
+</nav>
       
-      
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../chapter8/" class="md-nav__link">
-        
-  
-  <span class="md-ellipsis">
-    Выполнение
-  </span>
-  
-
-      </a>
     </li>
   
 
@@ -376,6 +353,23 @@
     
   
   
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#42" class="md-nav__link">
+    <span class="md-ellipsis">
+      Практическая работа 4.2
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
 </nav>
                   </div>
                 </div>
@@ -389,31 +383,32 @@
                   
 
 
-<h1 id="_1">Регистрация. Авторизация. Вывод информации о пользователе.</h1>
-<p>Подключить регистрацию / авторизацию по токенам / вывод информации о текущем
-пользователе средствами Djoser.</p>
-<p><strong>Регистрируемся на http://127.0.0.1:8000/api/auth/users/</strong>
-<img alt="Схема базы данных" src="../images/register.png" /></p>
-<p><strong>Входим на http://127.0.0.1:8000/api/auth/jwt/create/</strong>
-<img alt="Схема базы данных" src="../images/login.png" /></p>
-<p><strong>/Customers/</strong>
-<img alt="Схема базы данных" src="../images/customers.png" /></p>
-<p><strong>/cars/</strong>
-<img alt="Схема базы данных" src="../images/cars.png" />
-<strong>/employees/</strong>
-<img alt="Схема базы данных" src="../images/employees.png" />
-<strong>/services/</strong>
-<img alt="Схема базы данных" src="../images/services.png" />
-<strong>/orders/</strong>
-<img alt="Схема базы данных" src="../images/orders.png" />
-<strong>/order-details/</strong>
-<img alt="Схема базы данных" src="../images/details.png" />
-<strong>/payments/</strong>
-<img alt="Схема базы данных" src="../images/payments.png" />
-<strong>/qualifications/</strong>
-<img alt="Схема базы данных" src="../images/qualifications.png" /></p>
-<p><strong>/swagger/</strong>
-<img alt="Схема базы данных" src="../images/swagger.png" /></p>
+<h1 id="no4">Лабораторная работа №4</h1>
+<h2 id="42">Практическая работа 4.2</h2>
+<p><img alt="Схема базы данных" src="../images/pic1.png" /></p>
+<p><strong>Создание router</strong>
+<img alt="Схема базы данных" src="../images/pic3.png" /></p>
+<p><img alt="Схема базы данных" src="../images/pic2.png" /></p>
+<p><img alt="Схема базы данных" src="../images/pic4.png" /></p>
+<p><img alt="Схема базы данных" src="../images/pic5.png" />
+CORS
+<img alt="Схема базы данных" src="../images/pic7.png" /></p>
+<p>pip install django-cors-headers</p>
+<p>CORS_ORIGIN_ALLOW_ALL = True</p>
+<p><img alt="Схема базы данных" src="../images/pic7.png" /></p>
+<h1 id="_1">Интерфейсы</h1>
+<ol>
+<li>Авторизация и регистрация.+</li>
+<li>Добавление нового клиента, Информация о клиенте.+</li>
+<li>Добавление автомобиля клиента, Получение списка автомобилей клиента.+</li>
+<li>Создание заказа, Получение информации о заказе, Обновление статуса заказа.</li>
+<li>Создание записи об оплате, Получение информации об оплате.</li>
+<li>Добавление услуги, Получение списка всех услуг.+</li>
+<li>Добавление сотрудника, Информация о сотруднике.</li>
+</ol>
+<p><img alt="Схема базы данных" src="../images/pic9.png" />
+<img alt="Схема базы данных" src="../images/pic10.png" />
+<img alt="Схема базы данных" src="../images/pic11.png" /></p>
 
 
 
